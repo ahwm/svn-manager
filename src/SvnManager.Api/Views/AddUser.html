@@ -1,0 +1,36 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+</head>
+<body>
+    <form action="/user/add" method="post">
+        <div>
+            <label>Name: <input type="text" name="userName" value="@Model.UserName" /></label>
+        </div>
+        <div>
+            <label>Password: <input type="text" name="userPass" value="@Model.UserPassword" /></label>
+        </div>
+        <div>
+            <input type="submit" value="Add" />
+        </div>
+        @If.IsError
+        <p style="color:#f00;">@Model.ErrorMessage</p>
+        @EndIf
+        @If.IsSuccess
+        <p style="color:#0c0;">@Model.UserName added successfully!</p>
+        @EndIf
+        @If.HasUsers
+        <div style="margin-top:20px;">
+            <ul>
+                @Each.Users
+                <li>@Current.User</li>
+                @EndEach
+            </ul>
+        </div>
+        @EndIf
+    </form>
+</body>
+</html>
