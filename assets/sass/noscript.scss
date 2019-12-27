@@ -1,0 +1,19 @@
+@import 'libs/vars';
+@import 'libs/functions';
+@import 'libs/mixins';
+@import 'libs/skel';
+
+/*
+	Dimension by Pixelarity
+	pixelarity.com | hello@pixelarity.com
+	License: pixelarity.com/license
+*/
+
+/* Main */
+
+	#main {
+		article {
+			opacity: 1;
+			margin: (_size(element-margin) * 2) 0 0 0;
+		}
+	}
