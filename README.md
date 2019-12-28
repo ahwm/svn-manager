@@ -1,5 +1,7 @@
 # SVN Manager
 
+[![Build status](https://ci.appveyor.com/api/projects/status/sth4yasy9nop9hsu?svg=true)](https://ci.appveyor.com/project/ahwm/svn-manager)
+
 ## What it is
 SVN Manager is a Windows Service that allows you to create some automated tasks as well as open up a REST API endpoint (using NancyFx) for creating users and repositories.
 
