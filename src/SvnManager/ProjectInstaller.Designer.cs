@@ -39,7 +39,7 @@
             // 
             // serviceInstaller1
             // 
-            this.serviceInstaller1.Description = "Manager for Manwaring Web SVN Server (Automation)";
+            this.serviceInstaller1.Description = "Manager for SVN Server";
             this.serviceInstaller1.DisplayName = "SVN Manager";
             this.serviceInstaller1.ServiceName = "SvnManagerService";
             this.serviceInstaller1.StartType = System.ServiceProcess.ServiceStartMode.Automatic;
