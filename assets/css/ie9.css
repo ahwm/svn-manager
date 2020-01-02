@@ -1,35 +1,88 @@
 /*
-	Dimension by Pixelarity
+	Hyperspace by Pixelarity
 	pixelarity.com | hello@pixelarity.com
 	License: pixelarity.com/license
 */
 
-/* BG */
+/* Type */
 
-	#bg:before {
-		background: rgba(19, 21, 25, 0.5);
+	h1.major:after {
+		background: #4ca07e;
+	}
+
+/* Wrapper */
+
+	.wrapper.fullscreen {
+		min-height: 0;
+		padding-bottom: 6em;
+		padding-top: 6em;
+	}
+
+		body.is-ie .wrapper.fullscreen {
+			height: auto;
+		}
+
+/* Spotlights */
+
+	.spotlights > section {
+		padding-left: 20em;
+		position: relative;
+	}
+
+		.spotlights > section > .image {
+			height: 100%;
+			left: 0;
+			position: absolute;
+			top: 0;
+			width: 20em;
+		}
+
+		.spotlights > section > .content {
+			width: 100%;
+		}
+
+/* Features */
+
+	.features:after {
+		clear: both;
+		content: '';
+		display: block;
+	}
+
+	.features section {
+		float: left;
+	}
+
+/* Split */
+
+	.split:after {
+		clear: both;
+		content: '';
+		display: block;
+	}
+
+	.split > * {
+		float: left;
+	}
+
+/* Sidebar */
+
+	#sidebar nav a:after {
+		background-color: #4ca07e;
 	}
 
 /* Header */
 
-	#header .logo {
-		margin: 0 auto;
+	#header:after {
+		clear: both;
+		content: '';
+		display: block;
 	}
 
-	#header .content {
-		display: inline-block;
+	#header > .title {
+		float: left;
 	}
 
-	#header nav ul {
-		display: inline-block;
-	}
-
-		#header nav ul li {
-			display: inline-block;
-		}
-
-/* Main */
-
-	#main article {
-		margin: 0 auto;
+	#header > nav {
+		float: right;
 	}
