@@ -10,7 +10,7 @@ using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SvnManager.Api
+namespace SvnManager.WebUI
 {
     public class SvnBackups
     {

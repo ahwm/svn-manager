@@ -3,7 +3,7 @@ using System.Data.SqlClient;
 using System.Reflection;
 using System.Security.Cryptography;
 
-namespace SvnManager.Api
+namespace SvnManager.WebUI
 {
     /// <summary>
     /// Class to parse out and retrieve full details of a given <see cref="System.Exception"/> object

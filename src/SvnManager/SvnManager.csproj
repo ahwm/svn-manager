@@ -91,12 +91,6 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\SvnManager.Api\SvnManager.Api.csproj">
-      <Project>{090cb84d-6adf-4401-b3a5-dcfb624cb37f}</Project>
-      <Name>SvnManager.Api</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.7">
       <Visible>False</Visible>
       <ProductName>Microsoft .NET Framework 4.7 %28x86 and x64%29</ProductName>
@@ -107,6 +101,12 @@
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\SvnManager.WebUI\SvnManager.WebUI.csproj">
+      <Project>{2f2e87c6-b96b-4b65-9aa8-71668bb38f1d}</Project>
+      <Name>SvnManager.WebUI</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
