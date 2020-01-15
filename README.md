@@ -2,6 +2,11 @@
 
 [![Build status](https://ci.appveyor.com/api/projects/status/sth4yasy9nop9hsu?svg=true)](https://ci.appveyor.com/project/ahwm/svn-manager)
 
+[![GitHub](https://img.shields.io/github/license/ahwm/svn-manager.svg)](https://github.com/ahwm/svn-manager/blob/master/LICENSE)
+[![opened issues](https://img.shields.io/github/issues/ahwm/svn-manager.svg)](https://github.com/ahwm/svn-manager/issues)
+
+[![Donate](https://www.paypalobjects.com/en_US/i/btn/btn_donate_SM.gif)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=U3LZULHW5ECLN&source=url)
+
 ## What it is
 SVN Manager is a Windows Service that allows you to create some automated tasks as well as open up a REST API endpoint (using NancyFx) for creating users and repositories.
 
