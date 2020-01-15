@@ -11,7 +11,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
-namespace SvnManager.Api
+namespace SvnManager.WebUI
 {
     public class MainModule : NancyModule
     {
