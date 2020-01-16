@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SvnManager
 {
@@ -19,12 +17,14 @@ namespace SvnManager
             string configFile = string.Concat(System.Reflection.Assembly.GetEntryAssembly().Location, ".config");
             if (File.Exists(configFile))
             {
-                watcher = new FileSystemWatcher(Path.GetDirectoryName(configFile), Path.GetFileName(configFile));
-                watcher.EnableRaisingEvents = true;
-                watcher.Changed += watcher_Changed;
+                watcher = new FileSystemWatcher(Path.GetDirectoryName(configFile), Path.GetFileName(configFile))
+                {
+                    EnableRaisingEvents = true
+                };
+                watcher.Changed += Watcher_Changed;
             }
         }
-        void watcher_Changed(object sender, FileSystemEventArgs e)
+        void Watcher_Changed(object sender, FileSystemEventArgs e)
         {
             if ((DateTime.Now - lastChange).Seconds > 5) //Avoid code executing multiple times  
             {

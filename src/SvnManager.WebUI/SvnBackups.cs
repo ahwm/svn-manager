@@ -3,21 +3,22 @@ using Amazon.S3;
 using Amazon.S3.Model;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Management.Automation;
-using System.Net;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SvnManager.WebUI
 {
     public class SvnBackups
     {
-        private const string AccessKey = "";
-        private const string SecretKey = "";
-        private const string BucketName = "";
-        private const string BackupLocation = "";
+        private static string AccessKey => ConfigurationManager.AppSettings["Backups.S3AccessKey"];
+        private static string SecretKey => ConfigurationManager.AppSettings["Backups.S3SecretKey"];
+        private static string BucketName => ConfigurationManager.AppSettings["Backups.S3BucketName"];
+        private static string BackupLocation => ConfigurationManager.AppSettings["Backups.BackupLocation"];
+        private static string RepoPath => ConfigurationManager.AppSettings["Manager.RepoPath"];
+        private static string SvnLocation => ConfigurationManager.AppSettings["SvnLocation"];
+        private static int DaysBetweenBackups => Convert.ToInt32(ConfigurationManager.AppSettings["Backups.DaysBetweenBackups"]) * -1;
 
         public static void Upload()
         {
@@ -27,13 +28,13 @@ namespace SvnManager.WebUI
             {
                 BasicAWSCredentials cred = new BasicAWSCredentials(AccessKey, SecretKey);
                 AmazonS3Client c = new AmazonS3Client(cred, Amazon.RegionEndpoint.USWest2);
-                var files = new DirectoryInfo(BackupLocation).EnumerateFiles().Where(f => f.CreationTimeUtc > DateTime.UtcNow.AddDays(-7));
+                var files = new DirectoryInfo(BackupLocation).EnumerateFiles().Where(f => f.CreationTimeUtc > DateTime.UtcNow.AddDays(DaysBetweenBackups));
                 foreach (var file in files)
                 {
                     InitiateMultipartUploadResponse initResponse = c.InitiateMultipartUpload(new InitiateMultipartUploadRequest { StorageClass = S3StorageClass.StandardInfrequentAccess, BucketName = BucketName, Key = file.Name });
-                    long partSize = 100 * (long)Math.Pow(2, 20);
+                    long partSize = Convert.ToInt64(ConfigurationManager.AppSettings["Backups.S3PartSize"]) * (long)Math.Pow(2, 20);
                     List<UploadPartResponse> resps = new List<UploadPartResponse>();
-                    //var resp = c.PutObject(new Amazon.S3.Model.PutObjectRequest() { FilePath = file.FullName, BucketName = BucketName, Key = file.Name, StorageClass = S3StorageClass.StandardInfrequentAccess });
+
                     try
                     {
                         long filePosition = 0;
@@ -88,7 +89,7 @@ namespace SvnManager.WebUI
         {
             try
             {
-                var files = new DirectoryInfo(BackupLocation).EnumerateFiles().Where(f => f.CreationTimeUtc < DateTime.UtcNow.AddDays(-7));
+                var files = new DirectoryInfo(BackupLocation).EnumerateFiles().Where(f => f.CreationTimeUtc < DateTime.UtcNow.AddDays(DaysBetweenBackups));
                 foreach (var file in files)
                 {
                     file.Delete();
@@ -102,15 +103,27 @@ namespace SvnManager.WebUI
 
         public static void RunBackups()
         {
+            string output;
             try
             {
-                // TODO: Create backups
-                //using (PowerShell ps = PowerShell.Create())
-                //{
-                //    ps.AddCommand("Backup-SvnRepository");
-                //    ps.AddArgument("*");
-                //    ps.Invoke();
-                //}
+                var repos = new DirectoryInfo(RepoPath).GetDirectories();
+                foreach (var r in repos)
+                {
+                    using (Process p = new Process())
+                    {
+                        p.StartInfo = new ProcessStartInfo($@"{SvnLocation}\svnadmin", $@"dump {r.FullName} > {BackupLocation}\{r.Name}_{DateTime.UtcNow:yyyyMMddHHmm}.dump")
+                        {
+                            RedirectStandardError = true
+                        };
+                        p.Start();
+                        p.WaitForExit();
+                        output = p.StandardError.ReadToEnd();
+                        if (p.ExitCode != 0)
+                        {
+                            // TODO: Send email with output ?
+                        }
+                    }
+                }
             }
             catch (Exception ex)
             {
@@ -120,7 +133,7 @@ namespace SvnManager.WebUI
 
         public static bool IsBackupTime()
         {
-            var files = new DirectoryInfo(BackupLocation).EnumerateFiles().Where(f => f.CreationTimeUtc > DateTime.UtcNow.AddDays(-7));
+            var files = new DirectoryInfo(BackupLocation).EnumerateFiles().Where(f => f.CreationTimeUtc > DateTime.UtcNow.AddDays(-DaysBetweenBackups));
             if (files.Count() <= 0 && DateTime.UtcNow.Hour > 3 && DateTime.UtcNow.Hour < 8)
                 return true;
 
