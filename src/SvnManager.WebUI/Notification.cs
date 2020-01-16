@@ -1,10 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
+using System.Configuration;
 using System.Net.Mail;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SvnManager.WebUI
 {
@@ -17,22 +13,21 @@ namespace SvnManager.WebUI
         static public void SendError(Exception ex, string note)
         {
             // that send process does not include default bcc copying
-            MailMessage m = new MailMessage("", "");
-            m.Subject = "SVN Manager Error" + (note.Length > 0 ? " (" + note + ")" : "");
-            m.Body = GetFullError(ex);
-
-            try
+            using (MailMessage m = new MailMessage(ConfigurationManager.AppSettings["Manger.SendEmailFrom"], ConfigurationManager.AppSettings["Manger.SendErrorsTo"]))
             {
-                SmtpClient c = new SmtpClient();
-                c.Host = "";
-                c.Port = 587;
-                c.EnableSsl = true;
-                c.Credentials = new NetworkCredential("", "");
-                c.Send(m);
+                m.Subject = "SVN Manager Error" + (note.Length > 0 ? " (" + note + ")" : "");
+                m.Body = GetFullError(ex);
+
+                using (SmtpClient c = new SmtpClient())
+                {
+                    try
+                    {
+                        c.Send(m);
+                    }
+                    catch (Exception)
+                    { }
+                }
             }
-            catch (Exception)
-            { }
-            m.Dispose();
         }
         static private string GetFullError(Exception ex)
         {
@@ -48,7 +43,7 @@ namespace SvnManager.WebUI
 
             return
                 header +
-                "Error Type:  SVN Application Error\n" +
+                "Error Type:  SVN Manager Application Error\n" +
                 "Exception: \n" + ExcDetails.Get(ex);
         }
     }

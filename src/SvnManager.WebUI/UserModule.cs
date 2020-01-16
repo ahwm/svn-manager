@@ -2,10 +2,8 @@
 using Nancy;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SvnManager.WebUI
 {
@@ -31,9 +29,9 @@ namespace SvnManager.WebUI
                     string strPassword = password;
                     string userPasswordHash = Crypter.MD5.Crypt(strPassword, new CrypterOptions { { CrypterOption.Variant, MD5CrypterVariant.Apache } });
 
-                    var pwds = File.ReadAllText(@"C:\Repositories\htpasswd");
+                    var pwds = File.ReadAllText($@"{ConfigurationManager.AppSettings["Manger.RepoPath"].TrimEnd('\\')}\htpasswd");
                     pwds += $"{name}:{userPasswordHash}{Environment.NewLine}";
-                    File.WriteAllText(@"C:\Repositories\htpasswd", pwds);
+                    File.WriteAllText($@"{ConfigurationManager.AppSettings["Manger.RepoPath"].TrimEnd('\\')}\htpasswd", pwds);
                 }
                 catch (Exception ex)
                 {
@@ -51,7 +49,7 @@ namespace SvnManager.WebUI
             var users = new List<dynamic>();
 
             string line;
-            using (StreamReader fs = new StreamReader(@"C:\Repositories\htpasswd"))
+            using (StreamReader fs = new StreamReader($@"{ConfigurationManager.AppSettings["Manger.RepoPath"].TrimEnd('\\')}\htpasswd"))
             {
                 while ((line = fs.ReadLine()) != null)
                 {

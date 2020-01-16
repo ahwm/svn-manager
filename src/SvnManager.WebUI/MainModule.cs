@@ -1,20 +1,19 @@
 ﻿using Nancy;
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
+using System.Configuration;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Management.Automation;
-using System.Net;
 using System.Reflection;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 
 namespace SvnManager.WebUI
 {
     public class MainModule : NancyModule
     {
+        private static string RepoPath => ConfigurationManager.AppSettings["Manager.RepoPath"];
+        private static string SvnLocation => ConfigurationManager.AppSettings["SvnLocation"];
         public MainModule()
         {
             Get["/"] = x =>
@@ -52,36 +51,27 @@ namespace SvnManager.WebUI
         }
         private List<string> GetRepos()
         {
-            List<string> repos = new List<string>();
-            try
-            {
-                using (PowerShell ps = PowerShell.Create())
-                {
-                    ps.AddCommand("Get-SvnRepository");
-                    Collection<PSObject> output = ps.Invoke();
-                    foreach (var o in output)
-                    {
-                        repos.Add((string)o.Members["Name"].Value);
-                    }
-                }
-            }
-            catch { }
+            List<string> repos = new DirectoryInfo(RepoPath).GetDirectories().Select(r => r.Name).ToList();
 
             return repos;
         }
         private void CreateRepo(string name)
         {
-            using (PowerShell ps = PowerShell.Create())
+            using (Process p = new Process())
             {
-                ps.AddCommand("New-SvnRepository");
-                ps.AddArgument(name);
-                ps.Invoke();
+                p.StartInfo = new ProcessStartInfo($@"{SvnLocation}\svnadmin", $@"create {name}")
+                {
+                    WorkingDirectory = RepoPath,
+                    RedirectStandardError = true
+                };
+                p.Start();
+                p.WaitForExit();
             }
 
             // This gives all users read/write access
-            string svnAuthz = File.ReadAllText($@"C:\Repositories\{name}\conf\VisualSVN-SvnAuthz.ini");
+            string svnAuthz = File.ReadAllText($@"C:\Repositories\{name}\conf\SvnAuthz.ini");
             svnAuthz += "\r\n\r\n[/]\r\n*=rw";
-            File.WriteAllText($@"C:\Repositories\{name}\conf\VisualSVN-SvnAuthz.ini", svnAuthz);
+            File.WriteAllText($@"C:\Repositories\{name}\conf\SvnAuthz.ini", svnAuthz);
 
             // pre-commit hook to require commit messages
             using (var resource = Assembly.GetExecutingAssembly().GetManifestResourceStream("SvnManager.Api.SvnHooks.pre-commit.cmd"))

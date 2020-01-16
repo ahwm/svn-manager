@@ -1,27 +1,25 @@
 ﻿using SvnManager.WebUI;
 using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Data;
+using System.Configuration;
 using System.Diagnostics;
-using System.Linq;
-using System.Runtime.CompilerServices;
 using System.ServiceProcess;
-using System.Text;
-using System.Threading.Tasks;
 using System.Timers;
 
 namespace SvnManager
 {
     public partial class SvnManagerService : ServiceBase
     {
-        private const string Source = "SVNManagerService";
+        private static string Source => ConfigurationManager.AppSettings["Manger.EventSourceName"];
 
         Timer _backupTimer = new Timer(900_000); // check every 15 minutes (reduce time creep)
         BackgroundWorker _worker = new BackgroundWorker();
         NancyHostControl host;
         static ConfigMonitor monitor;
+
+        private string InterfaceUrlHost => ConfigurationManager.AppSettings["Manger.InterfaceUrlHost"];
+        private int InterfaceUrlPort => Convert.ToInt32(ConfigurationManager.AppSettings["Manger.InterfaceUrlPort"]);
+        private bool InterfaceUrlHttps => Convert.ToBoolean(ConfigurationManager.AppSettings["Manger.InterfaceUrlHttps"]);
 
         public SvnManagerService()
         {
@@ -33,7 +31,7 @@ namespace SvnManager
             if (!EventLog.SourceExists(Source))
                 EventLog.CreateEventSource(Source, "Application");
 
-            host = new NancyHostControl("", true);
+            host = new NancyHostControl(InterfaceUrlHost, InterfaceUrlPort, InterfaceUrlHttps);
             host.Start();
 
             _worker.DoWork += _worker_DoWork;
@@ -47,6 +45,9 @@ namespace SvnManager
         private void Monitor_Reloaded(object sender, EventArgs e)
         {
             EventLog.WriteEntry(Source, "Configuration Reloaded", EventLogEntryType.Information);
+            host.Stop();
+            host = new NancyHostControl(InterfaceUrlHost, InterfaceUrlPort, InterfaceUrlHttps);
+            host.Start();
         }
 
         private void _worker_DoWork(object sender, DoWorkEventArgs e)
