@@ -19,6 +19,11 @@ namespace SvnManager.WebUI
         protected override void ApplicationStartup(TinyIoCContainer container, IPipelines pipelines)
         {
             base.ApplicationStartup(container, pipelines);
+            pipelines.OnError += (ctx, ex) =>
+            {
+                Notification.SendError(ex);
+                return null;
+            };
             //CookieBasedSessions.Enable(pipelines);
 
             //var cryptographyConfiguration = new CryptographyConfiguration(new RijndaelEncryptionProvider(new PassphraseKeyGenerator("k60S3wal**7I2IVD$n1V", new byte[] { 1, 2, 3, 4, 5, 6, 7, 8 })), new DefaultHmacProvider(new PassphraseKeyGenerator("51t!1w2DH^Ge$iR8G^4w", new byte[] { 1, 2, 3, 4, 5, 6, 7, 8 })));
@@ -53,7 +58,7 @@ namespace SvnManager.WebUI
         protected override void ConfigureApplicationContainer(TinyIoCContainer container)
         {
             base.ConfigureApplicationContainer(container);
-            ResourceViewLocationProvider.RootNamespaces.Add(Assembly.GetAssembly(typeof(RepositoriesModule)), "SvnManager.Api.Views");
+            ResourceViewLocationProvider.RootNamespaces.Add(Assembly.GetAssembly(typeof(RepositoriesModule)), "SvnManager.WebUI.Views");
         }
     }
 }

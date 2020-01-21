@@ -1,5 +1,6 @@
 ﻿using CryptSharp;
 using Nancy;
+using SvnManager.WebUI.Code;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -9,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace SvnManager.WebUI
 {
-    public class UserApiModule : NancyModule
+    public class UserApiModule : SvnBaseModule
     {
         public UserApiModule() : base("/api/user")
         {
