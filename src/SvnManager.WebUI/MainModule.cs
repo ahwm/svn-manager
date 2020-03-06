@@ -1,7 +1,7 @@
 ﻿using Nancy;
+using SvnManager.WebUI.Code;
 using System;
 using System.Collections.Generic;
-using System.Configuration;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -10,10 +10,8 @@ using System.Text.RegularExpressions;
 
 namespace SvnManager.WebUI
 {
-    public class MainModule : NancyModule
+    public class MainModule : SvnBaseModule
     {
-        private static string RepoPath => ConfigurationManager.AppSettings["Manager.RepoPath"];
-        private static string SvnLocation => ConfigurationManager.AppSettings["SvnLocation"];
         public MainModule()
         {
             Get["/"] = x =>
@@ -59,9 +57,10 @@ namespace SvnManager.WebUI
         {
             using (Process p = new Process())
             {
-                p.StartInfo = new ProcessStartInfo($@"{SvnLocation}\svnadmin", $@"create {name}")
+                p.StartInfo = new ProcessStartInfo($@"{SvnLocation}\svnadmin", $@"create {Path.Combine(RepoPath, name)}")
                 {
-                    WorkingDirectory = RepoPath,
+                    UseShellExecute = false,
+                    WorkingDirectory = SvnLocation,
                     RedirectStandardError = true
                 };
                 p.Start();
@@ -69,23 +68,23 @@ namespace SvnManager.WebUI
             }
 
             // This gives all users read/write access
-            string svnAuthz = File.ReadAllText($@"C:\Repositories\{name}\conf\SvnAuthz.ini");
+            string svnAuthz = File.ReadAllText($@"{RepoPath}\{name}\conf\authz");
             svnAuthz += "\r\n\r\n[/]\r\n*=rw";
-            File.WriteAllText($@"C:\Repositories\{name}\conf\SvnAuthz.ini", svnAuthz);
+            File.WriteAllText($@"{RepoPath}\{name}\conf\authz", svnAuthz);
 
             // pre-commit hook to require commit messages
-            using (var resource = Assembly.GetExecutingAssembly().GetManifestResourceStream("SvnManager.Api.SvnHooks.pre-commit.cmd"))
+            using (var resource = Assembly.GetExecutingAssembly().GetManifestResourceStream("SvnManager.WebUI.SvnHooks.pre-commit.cmd"))
             {
-                using (var file = new FileStream($@"C:\Repositories\{name}\hooks\pre-commit.cmd", FileMode.Create, FileAccess.Write))
+                using (var file = new FileStream($@"{RepoPath}\{name}\hooks\pre-commit.cmd", FileMode.Create, FileAccess.Write))
                 {
                     resource.CopyTo(file);
                 }
             }
 
             // pre-revprop-change hook to allow for using svnsync
-            using (var resource = Assembly.GetExecutingAssembly().GetManifestResourceStream("SvnManager.Api.SvnHooks.pre-revprop-change.cmd"))
+            using (var resource = Assembly.GetExecutingAssembly().GetManifestResourceStream("SvnManager.WebUI.SvnHooks.pre-revprop-change.cmd"))
             {
-                using (var file = new FileStream($@"C:\Repositories\{name}\hooks\pre-revprop-change.cmd", FileMode.Create, FileAccess.Write))
+                using (var file = new FileStream($@"{RepoPath}\{name}\hooks\pre-revprop-change.cmd", FileMode.Create, FileAccess.Write))
                 {
                     resource.CopyTo(file);
                 }

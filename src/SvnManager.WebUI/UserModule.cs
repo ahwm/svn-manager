@@ -1,13 +1,13 @@
 ﻿using CryptSharp;
 using Nancy;
+using SvnManager.WebUI.Code;
 using System;
 using System.Collections.Generic;
-using System.Configuration;
 using System.IO;
 
 namespace SvnManager.WebUI
 {
-    public class UserModule : NancyModule
+    public class UserModule : SvnBaseModule
     {
         public UserModule() : base("/user")
         {
@@ -29,9 +29,9 @@ namespace SvnManager.WebUI
                     string strPassword = password;
                     string userPasswordHash = Crypter.MD5.Crypt(strPassword, new CrypterOptions { { CrypterOption.Variant, MD5CrypterVariant.Apache } });
 
-                    var pwds = File.ReadAllText($@"{ConfigurationManager.AppSettings["Manger.RepoPath"].TrimEnd('\\')}\htpasswd");
+                    var pwds = File.ReadAllText($@"{RepoPath.TrimEnd('\\')}\htpasswd");
                     pwds += $"{name}:{userPasswordHash}{Environment.NewLine}";
-                    File.WriteAllText($@"{ConfigurationManager.AppSettings["Manger.RepoPath"].TrimEnd('\\')}\htpasswd", pwds);
+                    File.WriteAllText($@"{RepoPath.TrimEnd('\\')}\htpasswd", pwds);
                 }
                 catch (Exception ex)
                 {
@@ -48,8 +48,14 @@ namespace SvnManager.WebUI
         {
             var users = new List<dynamic>();
 
+            if (!File.Exists($@"{RepoPath.TrimEnd('\\')}\htpasswd"))
+            {
+                File.CreateText($@"{RepoPath.TrimEnd('\\')}\htpasswd");
+                return users;
+            }
+
             string line;
-            using (StreamReader fs = new StreamReader($@"{ConfigurationManager.AppSettings["Manger.RepoPath"].TrimEnd('\\')}\htpasswd"))
+            using (StreamReader fs = new StreamReader($@"{RepoPath.TrimEnd('\\')}\htpasswd"))
             {
                 while ((line = fs.ReadLine()) != null)
                 {

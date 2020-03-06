@@ -58,6 +58,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Bootstrapper.cs" />
+    <Compile Include="Code\SvnBaseModule.cs" />
     <Compile Include="ExcDetails.cs" />
     <Compile Include="MainModule.cs" />
     <Compile Include="NancyHostControl.cs" />

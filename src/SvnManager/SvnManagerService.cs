@@ -10,16 +10,16 @@ namespace SvnManager
 {
     public partial class SvnManagerService : ServiceBase
     {
-        private static string Source => ConfigurationManager.AppSettings["Manger.EventSourceName"];
+        private static string Source => ConfigurationManager.AppSettings["Manager.EventSourceName"];
 
         Timer _backupTimer = new Timer(900_000); // check every 15 minutes (reduce time creep)
         BackgroundWorker _worker = new BackgroundWorker();
         NancyHostControl host;
         static ConfigMonitor monitor;
 
-        private string InterfaceUrlHost => ConfigurationManager.AppSettings["Manger.InterfaceUrlHost"];
-        private int InterfaceUrlPort => Convert.ToInt32(ConfigurationManager.AppSettings["Manger.InterfaceUrlPort"]);
-        private bool InterfaceUrlHttps => Convert.ToBoolean(ConfigurationManager.AppSettings["Manger.InterfaceUrlHttps"]);
+        private string InterfaceUrlHost => ConfigurationManager.AppSettings["Manager.InterfaceUrlHost"];
+        private int InterfaceUrlPort => Convert.ToInt32(ConfigurationManager.AppSettings["Manager.InterfaceUrlPort"]);
+        private bool InterfaceUrlHttps => Convert.ToBoolean(ConfigurationManager.AppSettings["Manager.InterfaceUrlHttps"]);
 
         public SvnManagerService()
         {
