@@ -45,9 +45,16 @@ namespace SvnManager
         private void Monitor_Reloaded(object sender, EventArgs e)
         {
             EventLog.WriteEntry(Source, "Configuration Reloaded", EventLogEntryType.Information);
-            host.Stop();
-            host = new NancyHostControl(InterfaceUrlHost, InterfaceUrlPort, InterfaceUrlHttps);
-            host.Start();
+            host.Dispose();
+            try
+            {
+                host = new NancyHostControl(InterfaceUrlHost, InterfaceUrlPort, InterfaceUrlHttps);
+                host.Start();
+            }
+            catch (Exception ex)
+            {
+                EventLog.WriteEntry(Source, ex.Message + "\r\n\r\n" + ex.StackTrace, EventLogEntryType.Error);
+            }
         }
 
         private void _worker_DoWork(object sender, DoWorkEventArgs e)
@@ -72,7 +79,7 @@ namespace SvnManager
 
         protected override void OnStop()
         {
-            host.Stop();
+            host.Dispose();
         }
     }
 }
