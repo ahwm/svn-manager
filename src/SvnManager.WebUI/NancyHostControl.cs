@@ -25,6 +25,7 @@ namespace SvnManager.WebUI
         public void Dispose()
         {
             _host.Stop();
+            _host.Dispose();
         }
     }
 }

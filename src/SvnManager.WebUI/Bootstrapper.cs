@@ -58,7 +58,8 @@ namespace SvnManager.WebUI
         protected override void ConfigureApplicationContainer(TinyIoCContainer container)
         {
             base.ConfigureApplicationContainer(container);
-            ResourceViewLocationProvider.RootNamespaces.Add(Assembly.GetAssembly(typeof(RepositoriesModule)), "SvnManager.WebUI.Views");
+            if (!ResourceViewLocationProvider.RootNamespaces.ContainsKey(Assembly.GetAssembly(typeof(RepositoriesModule))))
+                ResourceViewLocationProvider.RootNamespaces.Add(Assembly.GetAssembly(typeof(RepositoriesModule)), "SvnManager.WebUI.Views");
         }
     }
 }
