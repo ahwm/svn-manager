@@ -8,7 +8,7 @@
 [![Donate](https://www.paypalobjects.com/en_US/i/btn/btn_donate_SM.gif)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=U3LZULHW5ECLN&source=url)
 
 ## What it is
-SVN Manager is a Windows Service that allows you to create some automated tasks as well as open up a REST API endpoint (using NancyFx) for creating users and repositories.
+SVN Manager is a Windows Service licensed under the MIT license that allows you to create some automated tasks as well as open up a REST API endpoint (using NancyFx) for creating users and repositories.
 
 It will also facilitate automated backups and (currently) upload those to Amazon S3. Over time this will be made more modular so other providers can be used.
 
