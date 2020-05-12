@@ -7,6 +7,7 @@ using System.Configuration;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Threading;
 
 namespace SvnManager.WebUI
 {
@@ -51,7 +52,26 @@ namespace SvnManager.WebUI
                                 FilePath = file.FullName
                             };
 
-                            resps.Add(c.UploadPart(upReq));
+                            int tries = 1;
+                            UPLOAD:
+                            try
+                            {
+                                resps.Add(c.UploadPart(upReq));
+                            }
+                            catch (Exception ex)
+                            {
+                                var origEx = ex;
+                                while (ex.InnerException != null)
+                                    ex = ex.InnerException;
+
+                                if (ex is System.Net.Sockets.SocketException && ex.Message.Contains("connection attempt failed") && tries <= 3)
+                                {
+                                    tries++;
+                                    Thread.Sleep(30_000);
+                                    goto UPLOAD;
+                                }
+                                throw origEx;
+                            }
 
                             filePosition += partSize;
                         }
