@@ -123,7 +123,6 @@ namespace SvnManager.WebUI
 
         public static void RunBackups()
         {
-            string output;
             try
             {
                 var repos = new DirectoryInfo(RepoPath).GetDirectories();
@@ -131,17 +130,9 @@ namespace SvnManager.WebUI
                 {
                     using (Process p = new Process())
                     {
-                        p.StartInfo = new ProcessStartInfo($@"{SvnLocation}\svnadmin", $@"dump {r.FullName} > {BackupLocation}\{r.Name}_{DateTime.UtcNow:yyyyMMddHHmm}.dump")
-                        {
-                            RedirectStandardError = true
-                        };
+                        p.StartInfo = new ProcessStartInfo($@"cmd /c", $@"{SvnLocation}\svnadmin dump {r.FullName} > {BackupLocation}\{r.Name}_{DateTime.UtcNow:yyyyMMddHHmm}.svndump");
                         p.Start();
                         p.WaitForExit();
-                        output = p.StandardError.ReadToEnd();
-                        if (p.ExitCode != 0)
-                        {
-                            // TODO: Send email with output ?
-                        }
                     }
                 }
             }
