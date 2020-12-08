@@ -1,0 +1,92 @@
+Certificate:
+    Data:
+        Version: 3 (0x2)
+        Serial Number:
+            04:20:af:ac:7f:3f:16:f5:9a:64:b5:dd:18:fa:45:95:fd:02:09:38
+        Signature Algorithm: sha256WithRSAEncryption
+        Issuer: C=US, ST=Idaho, O=SVN Manager, CN=SVN Manager
+        Validity
+            Not Before: Dec  7 21:30:08 2020 GMT
+            Not After : Dec  6 21:30:08 2025 GMT
+        Subject: C=US, ST=Idaho, O=SVN Manager, CN=SVN Manager
+        Subject Public Key Info:
+            Public Key Algorithm: rsaEncryption
+                RSA Public-Key: (2048 bit)
+                Modulus:
+                    00:a7:f6:2f:c4:88:10:79:28:87:e6:2e:80:1a:7a:
+                    fe:88:5b:ed:c4:dd:8e:24:93:3c:cf:ce:83:6a:09:
+                    81:27:26:e1:f4:56:e6:c1:0d:08:03:38:2d:c2:e6:
+                    6a:72:b7:2d:1e:15:f5:6e:ce:be:bc:49:f3:bc:c2:
+                    43:3f:d6:e8:f7:20:22:5e:80:a2:b1:ef:9c:7d:ca:
+                    7c:17:43:f1:ac:c1:17:d0:a7:fc:18:1c:08:bc:a6:
+                    bf:52:e9:a7:93:b4:00:75:33:0f:a3:c1:ec:3d:fa:
+                    df:0a:74:f1:36:5d:9c:69:91:3a:f2:b8:d6:9c:82:
+                    34:1b:95:d9:be:fd:0b:21:08:12:48:a4:e7:81:6e:
+                    72:d7:25:d4:e8:09:0d:e9:9a:34:30:63:50:04:7c:
+                    f5:3c:57:b4:12:84:49:b3:63:2f:10:40:27:8e:de:
+                    86:bf:01:1e:ba:0d:bb:c0:25:66:7b:9c:ba:d5:f8:
+                    80:80:95:7a:9b:b7:fd:99:04:07:1c:55:f8:56:1b:
+                    3e:c1:85:74:6e:3d:a5:1c:da:44:82:c4:7b:9f:61:
+                    d5:9a:77:be:20:29:4c:56:f5:3e:c0:56:9a:b1:19:
+                    2d:8f:8d:b6:6a:99:a0:2d:98:42:b7:c4:7a:90:dc:
+                    cd:5d:10:ac:df:29:0c:c2:66:c8:b0:a3:bd:79:b9:
+                    01:7d
+                Exponent: 65537 (0x10001)
+        X509v3 extensions:
+            X509v3 Subject Key Identifier: 
+                EC:9D:44:E1:F1:E0:95:C7:81:0D:64:D9:10:8B:8F:D3:04:AC:5B:23
+            X509v3 Authority Key Identifier: 
+                keyid:EC:9D:44:E1:F1:E0:95:C7:81:0D:64:D9:10:8B:8F:D3:04:AC:5B:23
+                DirName:/C=US/ST=Idaho/O=SVN Manager/CN=SVN Manager
+                serial:04:20:AF:AC:7F:3F:16:F5:9A:64:B5:DD:18:FA:45:95:FD:02:09:38
+
+            X509v3 Basic Constraints: 
+                CA:TRUE
+            X509v3 CRL Distribution Points: 
+
+                Full Name:
+                  URI:https://win-svn.dev/win-svn.crl
+
+            X509v3 Subject Alternative Name: 
+                <EMPTY>
+
+    Signature Algorithm: sha256WithRSAEncryption
+         54:4e:5a:23:4c:9b:0c:bd:04:6c:0f:e3:9b:a0:02:de:4f:8d:
+         bf:4d:59:4f:e5:5e:b4:95:13:ac:d7:e4:86:fd:b6:86:ce:10:
+         3a:ce:81:88:9f:03:30:4c:52:fd:27:d5:aa:b9:3f:ac:57:54:
+         1b:1a:c3:8b:c4:64:8c:a4:c9:89:0f:19:32:f4:04:3e:3f:72:
+         10:a3:ab:0b:64:90:75:10:58:c6:8c:4a:65:11:21:cc:b0:5a:
+         d1:6c:c3:ed:45:d9:f1:ae:43:b7:7e:a8:06:46:88:9f:fb:5d:
+         ee:fe:9b:d2:c0:53:14:3e:00:61:0a:f5:bb:00:8a:f8:25:72:
+         f3:80:fa:17:54:9e:17:f4:bf:87:00:99:65:f0:30:7a:ec:50:
+         30:ce:59:bb:a8:31:6f:57:95:62:93:91:a3:27:b0:f3:bd:31:
+         18:f1:5a:be:44:bd:24:24:27:4b:60:68:0b:41:42:52:10:be:
+         54:5d:59:40:c9:04:b4:37:81:b9:e1:02:1f:9a:e8:4e:55:5c:
+         7a:ba:d9:28:77:41:74:8c:00:b3:6c:2d:3d:ca:31:fd:74:5f:
+         3d:6f:e5:24:84:bd:47:a4:92:c9:5c:bb:da:75:13:fe:04:a3:
+         19:d4:60:6b:a3:04:12:dd:79:7d:f9:c6:d3:33:8e:f9:44:a6:
+         57:7b:55:ed
+-----BEGIN CERTIFICATE-----
+MIIEFTCCAv2gAwIBAgIUBCCvrH8/FvWaZLXdGPpFlf0CCTgwDQYJKoZIhvcNAQEL
+BQAwSTELMAkGA1UEBhMCVVMxDjAMBgNVBAgTBUlkYWhvMRQwEgYDVQQKEwtTVk4g
+TWFuYWdlcjEUMBIGA1UEAxMLU1ZOIE1hbmFnZXIwHhcNMjAxMjA3MjEzMDA4WhcN
+MjUxMjA2MjEzMDA4WjBJMQswCQYDVQQGEwJVUzEOMAwGA1UECBMFSWRhaG8xFDAS
+BgNVBAoTC1NWTiBNYW5hZ2VyMRQwEgYDVQQDEwtTVk4gTWFuYWdlcjCCASIwDQYJ
+KoZIhvcNAQEBBQADggEPADCCAQoCggEBAKf2L8SIEHkoh+YugBp6/ohb7cTdjiST
+PM/Og2oJgScm4fRW5sENCAM4LcLmanK3LR4V9W7OvrxJ87zCQz/W6PcgIl6AorHv
+nH3KfBdD8azBF9Cn/BgcCLymv1Lpp5O0AHUzD6PB7D363wp08TZdnGmROvK41pyC
+NBuV2b79CyEIEkik54Fuctcl1OgJDemaNDBjUAR89TxXtBKESbNjLxBAJ47ehr8B
+HroNu8AlZnucutX4gICVepu3/ZkEBxxV+FYbPsGFdG49pRzaRILEe59h1Zp3viAp
+TFb1PsBWmrEZLY+NtmqZoC2YQrfEepDczV0QrN8pDMJmyLCjvXm5AX0CAwEAAaOB
+9DCB8TAdBgNVHQ4EFgQU7J1E4fHglceBDWTZEIuP0wSsWyMwgYQGA1UdIwR9MHuA
+FOydROHx4JXHgQ1k2RCLj9MErFsjoU2kSzBJMQswCQYDVQQGEwJVUzEOMAwGA1UE
+CBMFSWRhaG8xFDASBgNVBAoTC1NWTiBNYW5hZ2VyMRQwEgYDVQQDEwtTVk4gTWFu
+YWdlcoIUBCCvrH8/FvWaZLXdGPpFlf0CCTgwDAYDVR0TBAUwAwEB/zAwBgNVHR8E
+KTAnMCWgI6Ahhh9odHRwczovL3dpbi1zdm4uZGV2L3dpbi1zdm4uY3JsMAkGA1Ud
+EQQCMAAwDQYJKoZIhvcNAQELBQADggEBAFROWiNMmwy9BGwP45ugAt5Pjb9NWU/l
+XrSVE6zX5Ib9tobOEDrOgYifAzBMUv0n1aq5P6xXVBsaw4vEZIykyYkPGTL0BD4/
+chCjqwtkkHUQWMaMSmURIcywWtFsw+1F2fGuQ7d+qAZGiJ/7Xe7+m9LAUxQ+AGEK
+9bsAivglcvOA+hdUnhf0v4cAmWXwMHrsUDDOWbuoMW9XlWKTkaMnsPO9MRjxWr5E
+vSQkJ0tgaAtBQlIQvlRdWUDJBLQ3gbnhAh+a6E5VXHq62Sh3QXSMALNsLT3KMf10
+Xz1v5SSEvUekkslcu9p1E/4EoxnUYGujBBLdeX35xtMzjvlEpld7Ve0=
+-----END CERTIFICATE-----
