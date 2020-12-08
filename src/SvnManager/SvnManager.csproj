@@ -85,6 +85,8 @@
     <EmbeddedResource Include="ProjectInstaller.resx">
       <DependentUpon>ProjectInstaller.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="assets\rootCA.crt" />
+    <EmbeddedResource Include="assets\mgr.pfx" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="SvnManagerService.resx">
