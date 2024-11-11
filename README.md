@@ -1,6 +1,6 @@
 # SVN Manager
 
-[![Build status](https://ci.appveyor.com/api/projects/status/sth4yasy9nop9hsu?svg=true)](https://ci.appveyor.com/project/ahwm/svn-manager)
+[![build](https://github.com/ahwm/svn-manager/actions/workflows/build.yml/badge.svg)](https://github.com/ahwm/svn-manager/actions/workflows/build.yml)
 
 [![GitHub](https://img.shields.io/github/license/ahwm/svn-manager.svg)](https://github.com/ahwm/svn-manager/blob/master/LICENSE)
 [![opened issues](https://img.shields.io/github/issues/ahwm/svn-manager.svg)](https://github.com/ahwm/svn-manager/issues)
